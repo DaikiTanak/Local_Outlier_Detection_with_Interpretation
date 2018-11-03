@@ -118,7 +118,7 @@ class LODI(object):
             p=25
 
             # Using https://arxiv.org/abs/1604.08697 to get optimal w.
-            # The R implemension is here: https://cran.r-project.org/web/packages/rifle/index.html
+            # The R implementation is here: https://cran.r-project.org/web/packages/rifle/index.html
             # set parameters.
             r("source(file='function.R')")
             r("source(file='initial.convex.R')")
@@ -160,7 +160,30 @@ class LODI(object):
                 neighbors_AD.append(AD_list[nei_index])
             LAD_list.append(target_AD / np.mean(neighbors_AD))
 
+        self.LAD_list = LAD_list
+        self.w_list = np.array(w_list)
+
         return LAD_list
 
-    def interpret_outliers(self):
-        return self
+    def interpret_outliers(self, lambda_=0.2):
+        LAD_list = self.LAD_list
+        w_list = self.w_list
+
+        interpretation = []
+        for w in w_list:
+            w = w.flatten()
+            w_sum = np.sum(abs(w))
+            threshold = lambda_ * w_sum
+            w_sorted, w_sorted_index = np.sort(w)[-1::-1], np.argsort(w)[-1::-1]
+            #print(w_sorted_index)
+            weight_sum = 0
+            effective_feature_index = []
+            for element, index in zip(w_sorted, w_sorted_index):
+                if weight_sum > threshold:
+                    break
+                else:
+                    weight_sum += abs(element)
+                    effective_feature_index.append(index)
+            interpretation.append(effective_feature_index)
+
+        return interpretation
