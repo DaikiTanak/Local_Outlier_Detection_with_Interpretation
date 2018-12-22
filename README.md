@@ -1,5 +1,6 @@
 # Local_Outlier_Detection_with_Interpretation
 Python implementation of LODI [Dang+2013 ECML/PKDD]. (http://www.ecmlpkdd2013.org/wp-content/uploads/2013/07/222.pdf)
+See my commentary at https://www.slideshare.net/DaikiTanaka7/local-outlier-detection-with-interpretation.
 
 Detect anomalies and interpret them at the same time.
 This is a kind of searching optimal subspace based approach.
@@ -10,6 +11,3 @@ This is a kind of searching optimal subspace based approach.
   - anomalous_degree : Compute anomalous degree of each data. Using SVD.
   - interpret_outliers : Focus on the optimal subspace w and interpret anomalies.
 
-
-
-See my commentary at https://www.slideshare.net/DaikiTanaka7/local-outlier-detection-with-interpretation.
